@@ -2,7 +2,7 @@
 
 ## Installation
 ```
-git clone <url-repo>
+git clone https://github.com/Hikki12/breast-cancer-svm
 
 pip install -r requirements.txt
 ```

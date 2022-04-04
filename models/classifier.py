@@ -34,6 +34,11 @@ class Classifier:
             self.pca = joblib.load(filepath)
         
     def reduce_dim(self, X):
+        """Applies pca dim reduction.
+        
+        Args:
+            X: input data
+        """
         if self.has_pca():
             try:
                 X = self.pca.fit_transform(X)
@@ -41,7 +46,7 @@ class Classifier:
                 print("Classiffier:: ", e)
         return X
 
-    def train(self, X, y, cv: int = 5, reduce: bool = True):
+    def train(self, X, y, cv: int = 5, reduce: bool = True, scoring=None):
         """Trains the model with Cross Validation method.
         Args:
             X: input data
@@ -59,6 +64,7 @@ class Classifier:
             scores = cross_validate(
                 self.svm, X, y, cv=cv
             )
+
             return scores
 
     def predict(self, X, reduce: bool = False):

@@ -25,6 +25,7 @@ def load_cancer_data(split: bool = True, test_size: float = .2, random_state: in
         test_size: percentage of data to be used as test 
         random_state: random seed
         console: display dataset info?
+        normalize: normalize input data?
                
     Returns:
         X_train: input data for train
