@@ -1,0 +1,1 @@
+from .cancer import load_cancer_data
