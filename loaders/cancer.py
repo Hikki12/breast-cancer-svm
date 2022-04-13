@@ -17,7 +17,7 @@ def normalize_vector(x):
 
 
 def load_cancer_data(split: bool = True, test_size: float = .2, random_state: int = 42, 
-    console: bool = True, normalize: bool = True) -> tuple:
+    console: bool = True, normalize: bool = True, only_data: bool = True) -> tuple:
     """Loads splitted data for test and train.
     
     Args:
@@ -26,6 +26,7 @@ def load_cancer_data(split: bool = True, test_size: float = .2, random_state: in
         random_state: random seed
         console: display dataset info?
         normalize: normalize input data?
+        only_data: return only pandas dataframe?
                
     Returns:
         X_train: input data for train
@@ -39,6 +40,9 @@ def load_cancer_data(split: bool = True, test_size: float = .2, random_state: in
         np.c_[cancer["data"], cancer["target"]],
         columns=np.append(cancer["feature_names"], ["target"]),
     )
+
+    if only_data:
+        return df
 
     X = df.drop(["target"], axis=1)
     y = df["target"]

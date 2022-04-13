@@ -7,7 +7,8 @@ def pairplot(
     data: pd.DataFrame, 
     hue: str = 'target', 
     vars: list =[], 
-    show: bool = True
+    show: bool = True,
+    save: str = None,
     ):
     """Pair plot.
     
@@ -16,6 +17,7 @@ def pairplot(
         hue: target
         vars: data variables to be used.
         show: show the plotted window?
+        save: save name for the figure
     
     """
     sns.pairplot(
@@ -23,5 +25,8 @@ def pairplot(
         hue = hue,
         vars = vars
     )
+    if save is not None:
+        plt.savefig(save)
+
     if show:
         plt.show()

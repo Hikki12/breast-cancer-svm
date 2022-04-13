@@ -3,10 +3,15 @@ from sklearn.model_selection import cross_val_score, cross_validate
 from sklearn import svm
 from sklearn.decomposition import PCA
 import numpy as np
+import pandas as pd
 
 
 class Classifier:
-    """PCA - SVM classifier."""
+    """PCA - SVM classifier.
+    
+    Args:
+        n_components: Number of components for PCA
+    """
     def __init__(self, n_components: int = 0):
         self.svm = svm.SVC()
         self.pca = PCA(n_components=n_components)
@@ -33,7 +38,7 @@ class Classifier:
         if self.has_model():
             self.pca = joblib.load(filepath)
         
-    def reduce_dim(self, X):
+    def apply_pca(self, X):
         """Applies pca dim reduction.
         
         Args:
@@ -46,7 +51,7 @@ class Classifier:
                 print("Classiffier:: ", e)
         return X
 
-    def train(self, X, y, cv: int = 5, reduce: bool = True, scoring=None):
+    def train(self, X: pd.DataFrame, y: pd.DataFrame, cv: int = 5, reduce: bool = True, scoring=None):
         """Trains the model with Cross Validation method.
         Args:
             X: input data
@@ -59,7 +64,7 @@ class Classifier:
         """
         if self.has_svm():
             if reduce:
-                X = self.reduce_dim(X)
+                X = self.apply_pca(X)
 
             scores = cross_validate(
                 self.svm, X, y, cv=cv
@@ -67,7 +72,7 @@ class Classifier:
 
             return scores
 
-    def predict(self, X, reduce: bool = False):
+    def predict(self, X: pd.DataFrame, reduce: bool = False):
         """Make a prediction with the model.
 
         Args:
@@ -76,5 +81,5 @@ class Classifier:
         """
         if self.has_svm():
             if reduce:
-                X = self.reduce_dim(X)
+                X = self.apply_pca(X)
             return self.svm.predict(X)

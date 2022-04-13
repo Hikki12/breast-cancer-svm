@@ -1,1 +1,1 @@
-from plots import pairplot
+from .plots import pairplot
